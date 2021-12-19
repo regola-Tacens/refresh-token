@@ -65,8 +65,9 @@ exports.generateRefreshToken = async (req, res) => {
       } else {
         //extract payload from refresh token and generate a new access token and send it
         const payload = jwt.verify(tokenDoc.token, REFRESH_TOKEN_SECRET);
-        const accessToken = jwt.sign({ user: payload }, ACCESS_TOKEN_SECRET, {
-          expiresIn: "10m",
+        console.log('payload du refresh token', payload)
+        const accessToken = jwt.sign({ user: payload.user }, ACCESS_TOKEN_SECRET, {
+          expiresIn: "1m",
         });
         return res.status(200).json({ accessToken });
       }

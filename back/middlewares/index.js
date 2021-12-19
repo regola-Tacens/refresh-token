@@ -5,6 +5,7 @@ const privateKey = process.env.ACCESS_TOKEN_SECRET;
 exports.checkAuth = (req, res, next) => {
   // get the token stored in the custom header called 'x-auth-token'
   const token = req.get("x-auth-token");
+  console.log('token', token)
   //send error message if no token is found:
   if (!token) {
     return res.status(401).json({ error: "Access denied, token missing!" });
@@ -12,6 +13,7 @@ exports.checkAuth = (req, res, next) => {
     try {
       //if the incoming request has a valid token, we extract the payload from the token and attach it to the request object.
       const payload = jwt.verify(token, privateKey);
+      console.log('payload user: ', payload)
       req.user = payload.user;
       next();
     } catch (error) {
